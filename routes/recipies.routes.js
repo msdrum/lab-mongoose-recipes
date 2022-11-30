@@ -5,7 +5,7 @@ const recipeRoute = express.Router();
 
 //ROTAS
 
-//CREATE
+//CREATE A RECIPIE
 
 recipeRoute.post("/create", async (req, res) => {
   try {
@@ -15,7 +15,7 @@ recipeRoute.post("/create", async (req, res) => {
 
     console.log(newRecipe.title);
 
-    return res.status(201).json(newRecipe);
+    return res.status(201).json(newRecipe.title);
   } catch (error) {
     console.log(error);
     return res
@@ -23,6 +23,8 @@ recipeRoute.post("/create", async (req, res) => {
       .json({ msg: "Something got wrong when trying to create a new recipe." });
   }
 });
+
+//CREATE MANY RECIPIES
 
 //GET JUST TITLES
 
