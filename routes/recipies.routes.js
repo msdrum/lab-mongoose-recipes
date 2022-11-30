@@ -13,7 +13,7 @@ recipeRoute.post("/create", async (req, res) => {
 
     const newRecipe = await RecipeModel.create(form);
 
-    console.log(newRecipe.title);
+    // console.log(newRecipe.title);
 
     return res.status(201).json(newRecipe.title);
   } catch (error) {
@@ -25,6 +25,30 @@ recipeRoute.post("/create", async (req, res) => {
 });
 
 //CREATE MANY RECIPIES
+
+recipeRoute.post("/create-many-recipies", async (req, res) => {
+  try {
+    const newRecipies = await RecipeModel.insertMany([...req.body]);
+
+    return res.status(201).json(newRecipies);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
+//GET ALL RECIPIES
+
+recipeRoute.get("/all-recipies", async (req, res) => {
+  try {
+    const recipies = await RecipeModel.find({});
+
+    return res.status(200).json(recipies);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
 
 //GET JUST TITLES
 
