@@ -37,6 +37,25 @@ recipeRoute.post("/create-many-recipies", async (req, res) => {
   }
 });
 
+//GET ONE
+
+recipeRoute.put("/one-recipe/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const selectedRecipe = await RecipeModel.findOneAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(selectedRecipe);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
 //GET ALL RECIPIES
 
 recipeRoute.get("/all-recipies", async (req, res) => {
