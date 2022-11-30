@@ -5,7 +5,7 @@ async function connect() {
     //Pegando o caminho da conexão dentro do arquivo .env
     const dbConnection = await mongoose.connect(process.env.MONGODB_URI);
 
-    console.log(`Connected to databes ${dbConnection.connection.name}`);
+    console.log(`Connected to database ${dbConnection.connection.name}`);
   } catch (error) {
     console.log(error);
   }

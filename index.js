@@ -1,6 +1,7 @@
 import express, { application } from "express";
 import * as dotenv from "dotenv";
 import connect from "./config/db.config.js";
+import recipeRoute from "./routes/recipies.routes.js";
 
 //habilitar o servidor a ter variáveis de ambiente
 dotenv.config();
@@ -14,7 +15,7 @@ app.use(express.json());
 //Conectando com o Banco de Dados
 connect();
 
-app.use("/recipies", recipiesRoute);
+app.use("/recipies", recipeRoute);
 
 // o servidor subindo pro ar.
 app.listen(process.env.PORT, () => {
