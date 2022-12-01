@@ -20,7 +20,7 @@ userRoute.post("/create", async (req, res) => {
   }
 });
 
-// GET BY ID
+// GET USER BY ID
 userRoute.get("/read/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
@@ -32,6 +32,24 @@ userRoute.get("/read/:userId", async (req, res) => {
     }
 
     return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
+// EDIT USER INFORMATION
+userRoute.put("/update/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { ...req.body },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(updatedUser);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.errors);
