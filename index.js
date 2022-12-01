@@ -2,6 +2,7 @@ import express, { application } from "express";
 import * as dotenv from "dotenv";
 import connect from "./config/db.config.js";
 import recipeRoute from "./routes/recipies.routes.js";
+import userRoute from "./routes/user.routes.js";
 
 //habilitar o servidor a ter variáveis de ambiente
 dotenv.config();
@@ -16,6 +17,8 @@ app.use(express.json());
 connect();
 
 app.use("/recipies", recipeRoute);
+
+app.use("/user", userRoute);
 
 // o servidor subindo pro ar.
 app.listen(process.env.PORT, () => {
