@@ -56,5 +56,27 @@ userRoute.put("/update/:userId", async (req, res) => {
   }
 });
 
+//DELETE USER AND RECIPES FROM USER
+userRoute.delete("/delete/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const deletedUser = await UserModel.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(400).json({ msg: "User not found!" });
+    }
+
+    await UserModel.find();
+
+    await RecipeModel.deleteMany({ user: userId });
+
+    return res.status(204).json();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
 //EXPORTANDO
 export default userRoute;
