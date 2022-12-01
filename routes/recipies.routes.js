@@ -37,7 +37,7 @@ recipeRoute.post("/create-many-recipies", async (req, res) => {
   }
 });
 
-//GET ONE
+//EDIT ONE RECIPE
 
 recipeRoute.put("/one-recipe/:id", async (req, res) => {
   try {
@@ -50,6 +50,22 @@ recipeRoute.put("/one-recipe/:id", async (req, res) => {
     );
 
     return res.status(200).json(selectedRecipe);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
+//DELETE ONE
+recipeRoute.delete("/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const delectedRecipe = await RecipeModel.deleteOne(
+      { _id: id },
+      { new: true, runValidators: true }
+    );
+    return res.status(200).json(delectedRecipe);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.errors);
