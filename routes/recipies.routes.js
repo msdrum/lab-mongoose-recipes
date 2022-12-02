@@ -32,6 +32,27 @@ recipeRoute.post("/create/:userId", async (req, res) => {
   }
 });
 
+//DELETE /delete/:recipeId
+recipeRoute.delete("/delete/:recipeId", async (req, res) => {
+  try {
+    const { recipeId } = req.params;
+
+    //delete recipe
+    const deletedRecipe = await RecipeModel.findByIdAndDelete(recipeId);
+
+    //delete the recipe id from user recipes
+    await UserModel.findByIdAndUpdate(deletedRecipe.user, {
+      $pull: {
+        recipes: recipeId,
+      },
+    });
+    return res.status(204).json();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
 //CREATE A RECIPIE
 
 recipeRoute.post("/create", async (req, res) => {
