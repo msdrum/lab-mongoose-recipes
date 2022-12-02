@@ -1,9 +1,36 @@
 import express from "express";
 import RecipeModel from "../models/Recipe.model.js";
+import UserModel from "../models/User.model.js";
 
 const recipeRoute = express.Router();
 
 //ROTAS
+
+//CREATE A NEW RECUPE AND PUT ON USER RECIPE FIELD
+recipeRoute.post("/create/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    //Creating the new recipe in the recipe collection and connecting with userId
+    const newRecipe = await RecipeModel.create({ ...req.body, user: userId });
+
+    //Put the new recipe in the user recipe field
+    const userUpdated = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        $push: {
+          recipes: newRecipe._id,
+        },
+      },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(201).json(newRecipe);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error.errors);
+  }
+});
 
 //CREATE A RECIPIE
 
