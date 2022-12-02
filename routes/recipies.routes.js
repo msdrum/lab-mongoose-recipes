@@ -6,7 +6,7 @@ const recipeRoute = express.Router();
 
 //ROTAS
 
-//CREATE A NEW RECUPE AND PUT ON USER RECIPE FIELD
+//CREATE A NEW RECIPE AND PUT ON USER RECIPE FIELD
 recipeRoute.post("/create/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
